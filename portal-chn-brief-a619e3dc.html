@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>世界杯 · 查询与对照 | 信息页</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #fcedd1 0%, #f7d9b3 40%, #eac7a0 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      line-height: 1.6;
+      color: #3a2c1f;
+    }
+
+    .page-card {
+      max-width: 820px;
+      width: 100%;
+      background: rgba(255, 252, 245, 0.92);
+      backdrop-filter: blur(2px);
+      border-radius: 48px 16px 48px 16px;
+      box-shadow: 0 20px 40px -10px rgba(110, 70, 40, 0.25), 0 8px 20px rgba(0, 0, 0, 0.05);
+      padding: 2.8rem 2.5rem;
+      transition: all 0.2s ease;
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 1.2rem 0.8rem; }
+      .page-card { padding: 2rem 1.4rem; border-radius: 32px 12px 32px 12px; }
+    }
+
+    .opening {
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      border-left: 4px solid #c9874b;
+      padding-left: 1.2rem;
+      margin-bottom: 2rem;
+      color: #5d432b;
+      font-style: normal;
+    }
+
+    .opening strong {
+      font-weight: 600;
+      color: #7a4d2a;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 550;
+      color: #4d3520;
+      margin-top: 0.1rem;
+      margin-bottom: 1.8rem;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    h1 small {
+      display: block;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #7b5e42;
+      margin-top: 0.4rem;
+      letter-spacing: 0.03em;
+    }
+
+    .intro-text {
+      margin-bottom: 2.2rem;
+    }
+
+    .intro-text p {
+      margin-bottom: 1.2rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem 1.8rem;
+      margin: 2rem 0 2.2rem 0;
+    }
+
+    @media (max-width: 500px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
+      }
+    }
+
+    .feature-item {
+      background: #fcf6ed;
+      border-radius: 28px 8px 28px 8px;
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      box-shadow: inset 0 1px 3px rgba(255, 235, 210, 0.8), 0 2px 6px rgba(100, 65, 30, 0.06);
+    }
+
+    .feature-item span {
+      font-size: 1.5rem;
+      line-height: 1;
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+    }
+
+    .feature-item div {
+      flex: 1;
+    }
+
+    .feature-item h3 {
+      font-size: 1.05rem;
+      font-weight: 560;
+      color: #4e341d;
+      margin-bottom: 0.15rem;
+    }
+
+    .feature-item p {
+      font-size: 0.9rem;
+      color: #604b34;
+      margin: 0;
+    }
+
+    .use-scene {
+      background: #fff8ef;
+      border-radius: 40px 12px 40px 12px;
+      padding: 1.5rem 1.8rem;
+      margin: 1.5rem 0 2rem 0;
+      border: 1px solid #ebd4bb;
+    }
+
+    .use-scene h2 {
+      font-size: 1.2rem;
+      font-weight: 540;
+      color: #4e341d;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.01em;
+    }
+
+    .use-scene ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1.4rem;
+    }
+
+    .use-scene li {
+      font-size: 0.98rem;
+      color: #4d3824;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .use-scene li::before {
+      content: "·";
+      position: absolute;
+      left: 0;
+      color: #b57940;
+      font-weight: 700;
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .faq-note {
+      background: transparent;
+      border-top: 1px dashed #dbbc9b;
+      padding-top: 1.4rem;
+      margin-top: 1.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.2rem;
+      font-size: 0.92rem;
+      color: #5d452d;
+    }
+
+    .faq-note strong {
+      color: #6b3f1e;
+      font-weight: 550;
+    }
+
+    .closing {
+      margin: 2rem 0 0.8rem 0;
+      font-size: 0.98rem;
+      color: #604a32;
+      border-top: 1px solid #ebd4bb;
+      padding-top: 1.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.3rem 0.5rem;
+    }
+
+    .cta-link-wrap {
+      display: inline;
+    }
+
+    a {
+      color: #8a5229;
+      text-decoration: none;
+      font-weight: 530;
+      padding: 0.08rem 0.2rem;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.15s, background 0.1s;
+      border-radius: 4px;
+    }
+
+    a:hover {
+      border-bottom-color: #b77940;
+      background: #f7e3ce;
+    }
+
+    .button-link {
+      display: inline-block;
+      background: #f0d7bb;
+      color: #4f331d;
+      padding: 0.5rem 1.6rem 0.5rem 1.6rem;
+      border-radius: 60px 12px 60px 12px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border: none;
+      box-shadow: 0 2px 6px rgba(130, 80, 35, 0.1);
+      transition: all 0.15s;
+      margin-right: 0.4rem;
+      border-bottom: none;
+    }
+
+    .button-link:hover {
+      background: #e4c5a0;
+      box-shadow: 0 4px 12px rgba(120, 70, 25, 0.15);
+      transform: translateY(-1px);
+      border-bottom: none;
+    }
+
+    .muted-note {
+      color: #7a6249;
+      font-size: 0.85rem;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ebd4bb;
+      margin: 1.4rem 0 0.6rem 0;
+    }
+
+    .footer-tag {
+      text-align: right;
+      font-size: 0.75rem;
+      color: #907557;
+      margin-top: 0.6rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-card">
+    <div class="opening">
+      <strong>一场赛事，</strong>背后是数据、历史与地域的对照。
+    </div>
+
+    <h1>
+      世界杯 · 查询与对照
+      <small>从日常检索到延伸阅读</small>
+    </h1>
+
+    <div class="intro-text">
+      <p>对于许多用户，<strong>世界杯</strong>不仅是四年一度的盛会，更是一个需要反复查询、核对和延伸阅读的信息集合。从小组赛积分到历届冠军，从举办城市到时区差异——日常中那些零散的问题，往往需要一个可靠的信息锚点。</p>
+      <p>我们逐渐发现，与其在碎片页面之间跳转，不如在聚合页内完成对照：将赛程、纪录、参赛队伍、历史背景并置浏览，减少反复搜索的成本。这也是 <a href="https://portal-chn-worldcup.com" class="button-link">世界杯</a> 这个信息入口被频繁使用的原因——它提供了一种结构化的参照框架，而非单一新闻流。</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <span>🗂️</span>
+        <div>
+          <h3>多维对照</h3>
+          <p>赛程、积分、射手榜、过往决赛并列展示，方便横向对比与回溯。</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span>📆</span>
+        <div>
+          <h3>快速定位</h3>
+          <p>按年份、大洲、轮次筛选，从预选赛到决赛周均能直接检索。</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span>🌍</span>
+        <div>
+          <h3>地域背景</h3>
+          <p>主办城市、时区、场馆容量及气候信息一并呈现，辅助观赛规划。</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span>📚</span>
+        <div>
+          <h3>延伸阅读</h3>
+          <p>关联纪录、经典比赛简述、规则沿革，满足从查询到理解的递进。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="use-scene">
+      <h2>常见查询场景</h2>
+      <ul>
+        <li>某届世界杯小组赛积分及净胜球</li>
+        <li>历届冠军与决赛比分一览</li>
+        <li>特定球队的全部世界杯参赛史</li>
+        <li>主办国轮换规律与申办背景</li>
+        <li>单届最佳射手与助攻数据</li>
+        <li>赛制变更（24队→32队→48队）节点</li>
+      </ul>
+    </div>
+
+    <div class="faq-note">
+      <span><strong>❓ 常见提及</strong> — 参赛次数最多球队 · 单届进球纪录 · 最大分差比赛 · 连续晋级纪录</span>
+      <span>· 加时赛/点球规则沿革 · 金球奖与金靴奖得主</span>
+    </div>
+
+    <div class="closing">
+      <span>上述信息均可在聚合页内对照查找。若你经常需要查询</span>
+      <span class="cta-link-wrap"><a href="https://portal-chn-worldcup.com" style="border-bottom: 2px solid #dbbc9b;">世界杯</a></span>
+      <span>相关纪录、赛程或背景资料，该页面可作为日常参考的起点。</span>
+    </div>
+
+    <hr>
+    <div class="footer-tag">
+      信息索引 · 非官方页面 · 辅助对照
+    </div>
+  </div>
+</body>
+</html>
